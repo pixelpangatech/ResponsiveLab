@@ -5,6 +5,8 @@ A purely frontend-based web application designed to test how websites look acros
 
 ## Features
 
+- **Shareable URLs (Deep Linking)**: The browser's address bar automatically stays in sync with your testing grid. Share the exact configuration of devices and target URLs simply by copying the link!
+- **Workspaces & Device Presets**: Save custom combinations of devices to your browser's local storage and load an entire testing grid with a single click.
 - **Multi-Device Grid View**: Test multiple devices side-by-side simultaneously. Each device scales smartly to fit the screen.
 - **Realistic Device Frames**: Preview your websites inside beautiful CSS-based mockups (iPhone with notch, Desktop with bottom bezel, etc).
 - **Auto Proxying**: Bypasses strict browser security headers (`X-Frame-Options`) for external websites transparently by utilizing a public CORS proxy (`corsproxy.io`). No browser extensions required.
