@@ -22,13 +22,15 @@
         </svg>
       </button>
       <img src="images/Logo.png" alt="ResponsiveLab Logo" style="height: 40px; width: auto; border-radius: 4px;">
-      
+
       <div style="display: flex; flex-direction: column; justify-content: center;">
         <div style="display: flex; align-items: center; gap: 8px;">
           <h1 style="font-size: 1.25rem; margin: 0; line-height: 1;">ResponsiveLab</h1>
-          <span style="font-size: 0.65rem; padding: 2px 6px; background-color: var(--accent); color: white; border-radius: 4px; font-weight: 600;">v2.0</span>
+          <span
+            style="font-size: 0.65rem; padding: 2px 6px; background-color: var(--accent); color: white; border-radius: 4px; font-weight: 600;">v3.0</span>
         </div>
-        <span style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; line-height: 1;">Test. Preview. Perfect.</span>
+        <span style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; line-height: 1;">Test. Preview.
+          Perfect.</span>
       </div>
     </div>
 
@@ -87,6 +89,17 @@
         + Add Custom Size
       </button>
 
+      <div class="device-category" id="cat-workspaces">
+        <h3>Workspaces</h3>
+        <button id="save-workspace-btn" class="btn outline"
+          style="width: 100%; margin-bottom: 10px; font-size: 0.8rem; padding: 6px;">
+          Save Current Grid
+        </button>
+        <div id="workspaces-list" style="display: flex; flex-direction: column; gap: 4px;">
+          <!-- Workspaces appended here -->
+        </div>
+      </div>
+
       <div class="device-category" id="cat-desktop">
         <h3>Desktop</h3>
         <button class="device-btn" data-width="1920" data-height="1080">1920 x 1080 (FHD)</button>
@@ -131,9 +144,13 @@
   </div>
 
   <!-- Copyright Footer -->
-  <footer
+  <!--<footer
     style="position: fixed; bottom: 0; width: 100%; text-align: center; padding: 8px; background-color: var(--panel-bg); border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-secondary); z-index: 50;">
     &copy; 2026 PixelPanga Tech
+  </footer> -->
+  <footer
+    style="position: fixed; bottom: 0; width: 100%; text-align: center; padding: 8px; background-color: var(--panel-bg); border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-secondary); z-index: 50;">
+    &copy; 2026 Innovana Group
   </footer>
 
   <!-- Notification Toast -->
@@ -173,6 +190,26 @@
         <div class="modal-actions">
           <button type="button" id="cancel-modal" class="btn outline">Cancel</button>
           <button type="submit" class="btn primary">Save Size</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Save Workspace Modal -->
+  <div id="workspace-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Save Workspace</h2>
+        <button id="close-workspace-modal" class="close-btn">&times;</button>
+      </div>
+      <form id="workspace-form">
+        <div class="form-group">
+          <label>Workspace Name (e.g., Apple Devices)</label>
+          <input type="text" id="workspace-name" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancel-workspace-modal" class="btn outline">Cancel</button>
+          <button type="submit" class="btn primary">Save Workspace</button>
         </div>
       </form>
     </div>

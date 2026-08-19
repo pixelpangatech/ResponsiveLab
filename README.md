@@ -1,4 +1,4 @@
-# ResponsiveLab v2.0
+# ResponsiveLab v3.0
 *Test. Preview. Perfect.*
 
 A purely frontend-based web application designed to test how websites look across various device resolutions (mobile, tablet, desktop).

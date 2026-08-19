@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             updateAllScales();
+            updateURLState();
         }
     });
 
@@ -134,6 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         removeBtn.addEventListener('click', () => {
             wrapper.remove();
+            updateURLState();
+            updateAllScales();
         });
 
         devicesGrid.appendChild(wrapper);
@@ -144,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateAllScales();
+        updateURLState();
     }
 
     // Handle Device Selection (Event Delegation)
@@ -199,8 +203,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', updateAllScales);
 
-    // Initial load: Add one default device
-    addDevice(390, 844, 'iPhone 13');
+    function updateURLState() {
+        const wrappers = document.querySelectorAll('.device-wrapper');
+        const devices = [];
+        wrappers.forEach(w => {
+            devices.push(`${w.dataset.width}x${w.dataset.height}`);
+        });
+        
+        const params = new URLSearchParams();
+        if (currentUrl) params.set('url', currentUrl);
+        if (devices.length > 0) params.set('devices', devices.join(','));
+        
+        const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+        window.history.replaceState({}, '', newUrl);
+    }
+
+    function parseURLParams() {
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+        const devicesParam = params.get('devices');
+        
+        if (url) {
+            urlInput.value = url;
+            currentUrl = url;
+        }
+        
+        if (devicesParam) {
+            const deviceList = devicesParam.split(',');
+            deviceList.forEach(dev => {
+                const parts = dev.split('x');
+                if (parts.length === 2) {
+                    addDevice(parseInt(parts[0]), parseInt(parts[1]), 'Device');
+                }
+            });
+        } else {
+            // Initial load: Add one default device
+            addDevice(390, 844, 'iPhone 13');
+        }
+    }
+
+    // Load state from URL
+    parseURLParams();
     setTimeout(updateAllScales, 100);
 
     // Modal Logic
@@ -248,6 +291,93 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.textContent = `${size.width} x ${size.height} (${size.label})`;
         
         categoryDiv.appendChild(btn);
+    }
+
+    // Workspaces Logic
+    const saveWorkspaceBtn = document.getElementById('save-workspace-btn');
+    const workspaceModal = document.getElementById('workspace-modal');
+    const closeWorkspaceModal = document.getElementById('close-workspace-modal');
+    const cancelWorkspaceModal = document.getElementById('cancel-workspace-modal');
+    const workspaceForm = document.getElementById('workspace-form');
+    const workspacesList = document.getElementById('workspaces-list');
+
+    loadWorkspaces();
+
+    saveWorkspaceBtn.addEventListener('click', () => {
+        const wrappers = document.querySelectorAll('.device-wrapper');
+        if (wrappers.length === 0) {
+            showToast('No devices in grid to save!', false);
+            return;
+        }
+        workspaceModal.classList.remove('hidden');
+    });
+
+    closeWorkspaceModal.addEventListener('click', () => workspaceModal.classList.add('hidden'));
+    cancelWorkspaceModal.addEventListener('click', () => workspaceModal.classList.add('hidden'));
+
+    workspaceForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('workspace-name').value;
+        const wrappers = document.querySelectorAll('.device-wrapper');
+        const devices = [];
+        wrappers.forEach(w => {
+            const label = w.querySelector('.device-header span').textContent.split('(')[0].trim();
+            devices.push({
+                width: parseInt(w.dataset.width),
+                height: parseInt(w.dataset.height),
+                label: label
+            });
+        });
+
+        const newWorkspace = { name, devices, id: Date.now() };
+        const savedWorkspaces = JSON.parse(localStorage.getItem('workspaces') || '[]');
+        savedWorkspaces.push(newWorkspace);
+        localStorage.setItem('workspaces', JSON.stringify(savedWorkspaces));
+
+        renderWorkspace(newWorkspace);
+        
+        workspaceForm.reset();
+        workspaceModal.classList.add('hidden');
+        showToast('Workspace saved!');
+    });
+
+    function loadWorkspaces() {
+        const savedWorkspaces = JSON.parse(localStorage.getItem('workspaces') || '[]');
+        savedWorkspaces.forEach(ws => renderWorkspace(ws));
+    }
+
+    function renderWorkspace(ws) {
+        const btnWrapper = document.createElement('div');
+        btnWrapper.style.display = 'flex';
+        btnWrapper.style.gap = '4px';
+
+        const loadBtn = document.createElement('button');
+        loadBtn.className = 'device-btn';
+        loadBtn.style.flex = '1';
+        loadBtn.style.textAlign = 'left';
+        loadBtn.textContent = ws.name;
+        loadBtn.addEventListener('click', () => {
+            devicesGrid.innerHTML = '';
+            ws.devices.forEach(d => addDevice(d.width, d.height, d.label));
+            if (window.innerWidth <= 768) toggleSidebar();
+        });
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn outline';
+        delBtn.innerHTML = '&times;';
+        delBtn.style.padding = '0 8px';
+        delBtn.style.color = 'var(--danger)';
+        delBtn.title = 'Delete Workspace';
+        delBtn.addEventListener('click', () => {
+            let saved = JSON.parse(localStorage.getItem('workspaces') || '[]');
+            saved = saved.filter(w => w.id !== ws.id);
+            localStorage.setItem('workspaces', JSON.stringify(saved));
+            btnWrapper.remove();
+        });
+
+        btnWrapper.appendChild(loadBtn);
+        btnWrapper.appendChild(delBtn);
+        workspacesList.appendChild(btnWrapper);
     }
 
     function showToast(message, isSuccess = true) {
