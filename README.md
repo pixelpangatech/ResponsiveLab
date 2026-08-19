@@ -1,22 +1,27 @@
-# ResponsiveLab
+# ResponsiveLab v2.0
 *Test. Preview. Perfect.*
 
 A purely frontend-based web application designed to test how websites look across various device resolutions (mobile, tablet, desktop).
 
 ## Features
 
-- **Device Presets**: Quickly preview websites on predefined screen sizes (iPhone, Android, iPad, Desktop).
-- **Custom Sizes**: Add and save custom device resolutions.
+- **Multi-Device Grid View**: Test multiple devices side-by-side simultaneously. Each device scales smartly to fit the screen.
+- **Realistic Device Frames**: Preview your websites inside beautiful CSS-based mockups (iPhone with notch, Desktop with bottom bezel, etc).
 - **Auto Proxying**: Bypasses strict browser security headers (`X-Frame-Options`) for external websites transparently by utilizing a public CORS proxy (`corsproxy.io`). No browser extensions required.
-- **Frontend Only**: Runs entirely on the client side using HTML, CSS, and Vanilla JavaScript. No backend server required, making it perfect for Shared Hosting.
-- **Dark Mode UI**: Clean, modern, and developer-friendly interface.
+- **Smart URL Input**: Automatically formats URLs (e.g., typing `google.com` seamlessly resolves to `https://google.com`).
+- **Dark / Light Mode**: Beautiful UI with an instant theme toggle.
+- **QR Code Generator**: Generate a QR code of your current test URL to instantly scan and test on a real physical smartphone.
+- **Rulers & Guidelines**: Professional workspace environment with background grid and CSS rulers.
+- **Responsive Mobile Layout**: Includes a smart slide-in drawer sidebar for managing devices when using the tool on a mobile device or smaller screen.
+- **Frontend Only**: Runs entirely on the client side using HTML, CSS, and Vanilla JavaScript. No backend server required!
 
 ## Installation & Usage
 
 1. Download or clone this repository.
-2. Upload the files (`index.html`, `css/`, `js/`) to any web server (like Apache `htdocs` or cPanel `public_html`).
+2. Upload the files (`index.html`, `css/`, `js/`, `images/`) to any web server (like Apache `htdocs` or cPanel `public_html`).
 3. Open `index.html` in a modern browser.
-4. Type any URL and click **Load URL**.
+4. Add devices to the grid from the sidebar.
+5. Type any URL and click **Load URL**.
 
 ## Limitations
 
@@ -30,4 +35,4 @@ A purely frontend-based web application designed to test how websites look acros
 - JavaScript (ES6)
 
 ---
-*Developed by Pixel Panga Tech (2026).*
+*Developed by PixelPanga Tech (2026).*

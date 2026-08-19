@@ -5,37 +5,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ResponsiveLab</title>
+  <link rel="icon" type="image/png" href="images/fav.png">
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <header class="topbar">
-    <div class="logo" style="display: flex; flex-direction: column; justify-content: center;">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-          <line x1="8" y1="21" x2="16" y2="21"></line>
-          <line x1="12" y1="17" x2="12" y2="21"></line>
+    <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+      <button id="mobile-menu-btn" class="btn outline" style="display: none; padding: 4px; margin-right: 4px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
-        <h1 style="font-size: 1.25rem; margin: 0;">ResponsiveLab</h1>
-        <span style="font-size: 0.65rem; padding: 2px 6px; background-color: var(--accent); color: white; border-radius: 4px; font-weight: 600;">v1.0</span>
+      </button>
+      <img src="images/Logo.png" alt="ResponsiveLab Logo" style="height: 40px; width: auto; border-radius: 4px;">
+      
+      <div style="display: flex; flex-direction: column; justify-content: center;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <h1 style="font-size: 1.25rem; margin: 0; line-height: 1;">ResponsiveLab</h1>
+          <span style="font-size: 0.65rem; padding: 2px 6px; background-color: var(--accent); color: white; border-radius: 4px; font-weight: 600;">v2.0</span>
+        </div>
+        <span style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; line-height: 1;">Test. Preview. Perfect.</span>
       </div>
-      <span style="font-size: 0.75rem; color: var(--text-secondary); margin-left: 32px; margin-top: 2px;">Test. Preview. Perfect.</span>
     </div>
 
-    <form id="url-form" class="url-input-group">
+    <form id="url-form" class="url-input-group"
+      style="position: absolute; left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px;">
       <div style="display: flex; flex-direction: column; width: 100%; gap: 8px;">
-          <div style="display: flex; gap: 8px;">
-              <input type="text" id="url-input" placeholder="example.com" required style="flex: 1;">
-              <button type="submit" class="btn primary">Load URL</button>
-          </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="url-input" placeholder="example.com" required style="flex: 1;">
+          <button type="submit" class="btn primary">Load URL</button>
+        </div>
       </div>
     </form>
+
+    <div class="topbar-actions" style="display: flex; gap: 8px; margin-left: auto;">
+      <button id="qr-btn" class="btn outline" title="Generate QR Code">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+      </button>
+      <button id="theme-toggle-btn" class="btn outline" title="Toggle Light/Dark Mode">
+        <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
   </header>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
   <div class="main-container">
     <aside class="sidebar">
+      <div class="sidebar-mobile-header">
+        <h2 style="font-size: 1.1rem; margin: 0;">Devices</h2>
+        <button id="close-sidebar-btn" class="btn outline" style="padding: 4px; border: none;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
       <button id="add-custom-btn" class="btn primary highlight-btn" style="width: 100%; margin-bottom: 20px;">
         + Add Custom Size
       </button>
@@ -71,80 +118,82 @@
     </aside>
 
     <main class="preview-area">
-      <div class="preview-header">
-        <span id="current-res">390 x 844</span>
-        <span class="zoom-controls">
-          Scale: <span id="scale-value">100%</span>
-        </span>
-        <button id="rotate-btn" class="btn outline" style="padding: 4px 8px; margin-left: 10px;"
-          title="Rotate Device (Portrait/Landscape)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <polyline points="1 20 1 14 7 14"></polyline>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="iframe-wrapper">
-        <div id="iframe-container" style="width: 390px; height: 844px; position: relative;">
-          <iframe id="preview-frame" src="about:blank" frameborder="0"></iframe>
-          <div id="loading-overlay" class="loading-overlay hidden">
-            <div class="spinner"></div>
+      <div class="ruler-container">
+        <div class="ruler-top"></div>
+        <div class="ruler-content">
+          <div class="ruler-left"></div>
+          <div class="iframe-wrapper" id="devices-grid">
+            <!-- Dynamic Device Wrappers go here -->
           </div>
         </div>
       </div>
     </main>
   </div>
 
-    <!-- Copyright Footer -->
-    <footer style="position: fixed; bottom: 0; width: 100%; text-align: center; padding: 8px; background-color: var(--panel-bg); border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-secondary); z-index: 50;">
-        &copy; 2026 Pixel Panga Tech
-    </footer>
+  <!-- Copyright Footer -->
+  <footer
+    style="position: fixed; bottom: 0; width: 100%; text-align: center; padding: 8px; background-color: var(--panel-bg); border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-secondary); z-index: 50;">
+    &copy; 2026 PixelPanga Tech
+  </footer>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="toast hidden">Notification</div>
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden">Notification</div>
 
-    <!-- Custom Size Modal -->
-    <div id="custom-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Add Custom Size</h2>
-                <button id="close-modal" class="close-btn">&times;</button>
-            </div>
-            <form id="custom-size-form">
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="custom-cat" required>
-                        <option value="cat-desktop">Desktop</option>
-                        <option value="cat-iphone">iPhone</option>
-                        <option value="cat-android">Android</option>
-                        <option value="cat-ipad">iPad / Tab</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Label (e.g., My Phone)</label>
-                    <input type="text" id="custom-label" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Width (px)</label>
-                        <input type="number" id="custom-width" min="100" max="5000" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Height (px)</label>
-                        <input type="number" id="custom-height" min="100" max="5000" required>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" id="cancel-modal" class="btn outline">Cancel</button>
-                    <button type="submit" class="btn primary">Save Size</button>
-                </div>
-            </form>
+  <!-- Custom Size Modal -->
+  <div id="custom-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Custom Size</h2>
+        <button id="close-modal" class="close-btn">&times;</button>
+      </div>
+      <form id="custom-size-form">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="custom-cat" required>
+            <option value="cat-desktop">Desktop</option>
+            <option value="cat-iphone">iPhone</option>
+            <option value="cat-android">Android</option>
+            <option value="cat-ipad">iPad / Tab</option>
+          </select>
         </div>
+        <div class="form-group">
+          <label>Label (e.g., My Phone)</label>
+          <input type="text" id="custom-label" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Width (px)</label>
+            <input type="number" id="custom-width" min="100" max="5000" required>
+          </div>
+          <div class="form-group">
+            <label>Height (px)</label>
+            <input type="number" id="custom-height" min="100" max="5000" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancel-modal" class="btn outline">Cancel</button>
+          <button type="submit" class="btn primary">Save Size</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <script src="js/script.js"></script>
+  <!-- QR Code Modal -->
+  <div id="qr-modal" class="modal hidden">
+    <div class="modal-content" style="max-width: 300px; text-align: center;">
+      <div class="modal-header">
+        <h2>Scan to Test</h2>
+        <button id="close-qr-modal" class="close-btn">&times;</button>
+      </div>
+      <div style="padding: 20px;">
+        <img id="qr-image" src="" alt="QR Code" style="max-width: 100%; display: none; margin: 0 auto;">
+        <p id="qr-placeholder" style="color: var(--text-secondary); font-size: 0.9rem;">Enter a URL first to generate a
+          QR code.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
 </body>
 
 </html>

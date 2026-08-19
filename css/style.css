@@ -1,12 +1,23 @@
 :root {
-    --bg-color: #0f1115;
-    --panel-bg: #1a1d24;
-    --border-color: #2a2e37;
-    --text-primary: #f0f2f5;
-    --text-secondary: #9ba1a6;
-    --accent: #3b82f6;
-    --accent-hover: #2563eb;
+    --bg-color: #0f111a;
+    --panel-bg: #1a1d27;
+    --border-color: #2a2e3d;
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --danger: #ef4444;
     --success: #10b981;
+}
+
+[data-theme="light"] {
+    --bg-color: #f8fafc;
+    --panel-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
 }
 
 * {
@@ -27,6 +38,7 @@ body {
 
 /* Header & Toolbar */
 .topbar {
+    position: relative;
     height: 64px;
     background-color: var(--panel-bg);
     border-bottom: 1px solid var(--border-color);
@@ -126,6 +138,7 @@ body {
     color: var(--text-secondary);
     letter-spacing: 0.05em;
     margin-bottom: 12px;
+    padding-left: 12px;
 }
 
 .device-btn {
@@ -349,64 +362,7 @@ body {
     margin-top: 24px;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .topbar {
-        height: auto;
-        flex-direction: column;
-        padding: 16px;
-        gap: 16px;
-    }
-    
-    .url-input-group {
-        width: 100%;
-        margin: 0;
-    }
-    
-    .actions {
-        width: 100%;
-    }
-    
-    .actions .btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .main-container {
-        flex-direction: column;
-        height: auto;
-        min-height: calc(100vh - 150px);
-    }
-    
-    .sidebar {
-        width: 100%;
-        height: auto;
-        max-height: none;
-        flex-direction: row;
-        overflow-x: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding: 16px;
-    }
-    
-    #add-custom-btn {
-        min-width: 150px;
-        margin-bottom: 0;
-        margin-right: 20px;
-        align-self: center;
-    }
-    
-    .device-category {
-        min-width: 200px;
-        margin-right: 20px;
-        margin-bottom: 0;
-    }
-    
-    .preview-area {
-        height: 60vh;
-        min-height: 500px;
-    }
-}
+/* Removed old mobile layout */
 /* Loading Overlay */
 .loading-overlay {
     position: absolute;
@@ -440,4 +396,183 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Rulers */
+.ruler-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ruler-top {
+    height: 20px;
+    background-color: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    background-image: repeating-linear-gradient(to right, var(--border-color) 0, var(--border-color) 1px, transparent 1px, transparent 100px),
+                      repeating-linear-gradient(to right, var(--border-color) 0, var(--border-color) 1px, transparent 1px, transparent 10px);
+    background-size: 100px 100%, 10px 50%;
+    background-repeat: repeat-x;
+    background-position: 0 0, 0 bottom;
+}
+
+.ruler-left {
+    width: 20px;
+    background-color: var(--panel-bg);
+    border-right: 1px solid var(--border-color);
+    background-image: repeating-linear-gradient(to bottom, var(--border-color) 0, var(--border-color) 1px, transparent 1px, transparent 100px),
+                      repeating-linear-gradient(to bottom, var(--border-color) 0, var(--border-color) 1px, transparent 1px, transparent 10px);
+    background-size: 100% 100px, 50% 10px;
+    background-repeat: repeat-y;
+    background-position: 0 0, right 0;
+    flex-shrink: 0;
+}
+
+.ruler-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Multi-Device Grid */
+#devices-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.device-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.device-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.remove-device-btn {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Realistic Device Frames */
+.device-frame {
+    background: #000;
+    border: 12px solid #1a1a1a;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.device-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 25px;
+    background: #1a1a1a;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    z-index: 10;
+}
+
+.device-frame.desktop-frame {
+    border: 10px solid #1a1a1a;
+    border-bottom-width: 20px;
+    border-radius: 10px;
+}
+.device-frame.desktop-frame::before {
+    display: none;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+    #mobile-menu-btn {
+        display: flex !important;
+    }
+    
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.5);
+        padding-top: 20px;
+    }
+
+    .sidebar-mobile-header {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+    }
+
+    .sidebar.sidebar-open {
+        transform: translateX(0);
+    }
+    
+    .topbar {
+        height: auto;
+        min-height: 64px;
+        flex-wrap: wrap;
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .url-input-group {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        order: 3;
+    }
+    
+    .topbar-actions {
+        order: 2;
+    }
+    
+    .logo span {
+        display: none; /* Hide tagline on mobile */
+    }
+}
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+.sidebar-mobile-header {
+    display: none;
 }
