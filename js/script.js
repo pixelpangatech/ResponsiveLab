@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             iframes.forEach((iframe, index) => {
                 overlays[index].classList.remove('hidden');
-                iframe.src = `https://corsproxy.io/?${encodeURIComponent(currentUrl)}`;
+                iframe.src = `proxy.php?url=${encodeURIComponent(currentUrl)}`;
             });
             
             updateAllScales();
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentUrl) {
             loadingOverlay.classList.remove('hidden');
-            iframe.src = `https://corsproxy.io/?${encodeURIComponent(currentUrl)}`;
+            iframe.src = `proxy.php?url=${encodeURIComponent(currentUrl)}`;
         }
 
         updateAllScales();
@@ -202,6 +202,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', updateAllScales);
+
+    // Handle Scroll Sync from Proxy
+    window.addEventListener('message', (e) => {
+        if (e.data && e.data.type === 'RESPONSIVELAB_SCROLL') {
+            const iframes = document.querySelectorAll('.preview-frame');
+            iframes.forEach(iframe => {
+                // Relay to all iframes except the sender
+                if (iframe.contentWindow !== e.source) {
+                    iframe.contentWindow.postMessage(e.data, '*');
+                }
+            });
+        }
+    });
 
     function updateURLState() {
         const wrappers = document.querySelectorAll('.device-wrapper');
